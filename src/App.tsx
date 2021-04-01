@@ -100,9 +100,17 @@ function App() {
         padding: "4rem"
       }}>
         <OutputsGrid id="outputs-grid">
-              <OutputBox></OutputBox>
-              <OutputBox></OutputBox>
-              <OutputBox></OutputBox>
+              <OutputBox>
+                <h2>Taxes Payed</h2>
+              </OutputBox>
+              <OutputBox>
+              <h2>Other</h2>
+
+              </OutputBox>
+              <OutputBox>
+              <h2>Versus USA Average</h2>
+
+              </OutputBox>
 
         </OutputsGrid>
       </section>
@@ -128,13 +136,16 @@ const OutputBox = styled.div`
   min-height: 200px;
   border-radius: 8px;
   align-self: center;
-  flex-grow: 1;
+  flex: 1 1 0;
   padding: 2rem;
   /* min-width: 220px; */
   position: relative;
   box-shadow: 0 4px 8px rgba(0,0,0,.3);
   max-width: 380px;
   min-width: 220px;
+  h2{
+    margin: 0;
+  }
 `
 
 

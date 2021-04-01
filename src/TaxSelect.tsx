@@ -1,25 +1,32 @@
 import React from "react"
 import styled from "styled-components"
-interface Props{
+interface Props {
     setTax: (number: string) => void,
     tax: number
 }
 export default function TaxSelect(props: Props) {
-  return (
-    <TaxSelectStyle>
-      <label htmlFor="tax-select">APR</label>
-      <input
-        type="range"
-        name="tax-select"
-        id="tax-select"
-        step={0.1}
-        min={0.99}
-        max={14.99}
-        value={props.tax}
-        onChange={e => props.setTax(e.target.value)}
-      />
-    </TaxSelectStyle>
-  )
+
+    // function to update position of thumb follower element
+    function updateFollower() {
+
+    }
+    return (
+        <TaxSelectStyle>
+            <label htmlFor="tax-select">APR</label>
+            <input
+                type="range"
+                name="tax-select"
+                id="tax-select"
+                step={0.1}
+                min={0.99}
+                max={14.99}
+                value={props.tax}
+                onChange={e => props.setTax(e.target.value)}
+                onInput={e => updateFollower()}
+            />
+            <div className="slider-follower"></div>
+        </TaxSelectStyle>
+    )
 }
 const TaxSelectStyle = styled.div`
   width: 100%;
@@ -45,8 +52,8 @@ const TaxSelectStyle = styled.div`
       height: 3px;
     }
     ::-webkit-slider-thumb{
-        width: 20px;
-        height: 20px;
+        width: 36px;
+        height: 36px;
         background: white;
         border:none;
     }
@@ -77,6 +84,12 @@ const TaxSelectStyle = styled.div`
     /* ms */
     ::-ms-fill-lower {
       background: #862ffc;
+    }
+
+    .slider-follow{
+        position: absolute;
+        bottom: 0;
+
     }
   }
 `
