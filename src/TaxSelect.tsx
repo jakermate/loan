@@ -49,7 +49,8 @@ const TaxSelectStyle = styled.div`
       width: 100%;
       background-color: rgb(38, 48, 60);
 
-      height: 3px;
+      height: 12px;
+      border-radius: 8px;
     }
     ::-webkit-slider-thumb{
         width: 36px;
@@ -63,10 +64,13 @@ const TaxSelectStyle = styled.div`
       width: 100%;
       background-color: rgb(38, 48, 60);
 
-      height: 3px;
+      height: 12px;
+      border-radius: 8px;
     }
     ::-moz-range-progress {
       background: #862ffc;
+      height: 100%;
+      border-radius: 8px;
     }
     ::-moz-range-thumb{
         width: 36px;
@@ -84,6 +88,8 @@ const TaxSelectStyle = styled.div`
     /* ms */
     ::-ms-fill-lower {
       background: #862ffc;
+      height: 100%;
+      border-radius: 8px;
     }
 
     .slider-follow{
