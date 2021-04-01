@@ -14,8 +14,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background: linear-gradient(to bottom, #212a3d, #1a2335);
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +35,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h2{
+  font-weight: 500;
+  margin: 2rem;
 }
