@@ -136,7 +136,7 @@ const MonthSelectStyle = styled.div`
                 background: white;
                 
                 position: absolute;
-                
+                box-shadow: 2px 2px 4px rgba(0,0,0,.3);
                 border-radius: 2rem;
                 top:8px;
                 bottom: 8px;

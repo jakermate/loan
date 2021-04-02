@@ -7,31 +7,52 @@ interface Props {
 export default function TaxSelect(props: Props) {
 
     // function to update position of thumb follower element
-    function updateFollower() {
 
-    }
     return (
         <TaxSelectStyle>
             <label htmlFor="tax-select">APR</label>
-            <input
-                type="range"
-                name="tax-select"
-                id="tax-select"
-                step={0.1}
-                min={0.99}
-                max={14.99}
-                value={props.tax}
-                onChange={e => props.setTax(e.target.value)}
-                onInput={e => updateFollower()}
-            />
-            <div className="slider-follower"></div>
+            <div className="slider-wrap">
+                <input
+                    type="range"
+                    name="tax-select"
+                    id="tax-select"
+                    step={0.1}
+                    min={0.99}
+                    max={14.99}
+                    value={props.tax}
+                    onChange={e => props.setTax(e.target.value)}
+                />
+                <div className="tax-output" style={{
+                    background: `linear-gradient(to right, hsl(${140 - props.tax * 10}, 72%, 58%), hsl(${110 - props.tax * 10}, 72%, 58%))`
+                }}>{props.tax}%</div>
+            </div>
+
         </TaxSelectStyle>
     )
 }
 const TaxSelectStyle = styled.div`
   width: 100%;
+  .slider-wrap{
+      display: flex;
+      flex-direction: row;
+  }
+  .tax-output{
+        color: white;
+        text-shadow: 2px 2px 2px rgba(0,0,0,.4);
+        padding: 1rem;
+        box-shadow: 3px 3px 6px rgba(0,0,0,.3);
+        border-radius: 2rem;
+        font-size: 1rem;
+        margin-left: 1rem;
+        min-width: 4rem;
+        display: flex;
+        font-weight: 700;
+        justify-content: center;
+        align-items: center;
+    }
   input[type="range"] {
     outline: none;
+    cursor: pointer;
     :active,
     :focus {
       outline: none;
@@ -71,6 +92,7 @@ const TaxSelectStyle = styled.div`
       background: #862ffc;
       height: 100%;
       border-radius: 8px;
+      height: 12px;
     }
     ::-moz-range-thumb{
         width: 36px;
@@ -90,12 +112,10 @@ const TaxSelectStyle = styled.div`
       background: #862ffc;
       height: 100%;
       border-radius: 8px;
-    }
-
-    .slider-follow{
-        position: absolute;
-        bottom: 0;
+      height: 12px;
 
     }
+
+   
   }
 `
