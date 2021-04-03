@@ -15,7 +15,7 @@ export default function MonthSelect(props: MonthProps) {
 
         // determine order of animations
         // @ts-ignore
-        if (parseFloat(indEl?.style.left) > buttonEl?.offsetLeft){
+        if (parseFloat(indEl?.style.left) > buttonEl?.offsetLeft) {
             // @ts-ignore
             indEl.style.left = `${buttonEl?.offsetLeft}px`
             setTimeout(() => {
@@ -28,10 +28,10 @@ export default function MonthSelect(props: MonthProps) {
 
         // @ts-ignore
         indEl.style.right = `${containerEl.clientWidth - buttonEl?.offsetLeft - buttonEl?.offsetWidth}px`
-        setTimeout(()=>{
+        setTimeout(() => {
 
-        // @ts-ignore
-        indEl.style.left = `${buttonEl?.offsetLeft}px`
+            // @ts-ignore
+            indEl.style.left = `${buttonEl?.offsetLeft}px`
         }, 100)
 
 
@@ -77,7 +77,12 @@ export default function MonthSelect(props: MonthProps) {
                 </li>
             </ul>
             <div id="month-indicator-container">
-                <div id="indicator" className="indicator"></div>
+                <div id="indicator" className="indicator">
+                    {props.months}
+                </div>
+                <div className="numbers">
+                   
+                </div>
             </div>
         </MonthSelectStyle>
     )
@@ -95,6 +100,7 @@ const MonthSelectStyle = styled.div`
         display: flex;
         flex-direction: row;
         margin: 0;
+        position: relative;
         list-style: none;
         height: 100%;
         align-items: center;
@@ -126,6 +132,7 @@ const MonthSelectStyle = styled.div`
     }
     #month-indicator-container{
             position: absolute;
+            z-index: 1;
             pointer-events: none;
             top:0;
             left:0;
@@ -134,12 +141,17 @@ const MonthSelectStyle = styled.div`
             padding: 4px;
             .indicator{
                 background: white;
-                
+                color: #862FFC;
                 position: absolute;
                 box-shadow: 2px 2px 4px rgba(0,0,0,.3);
                 border-radius: 2rem;
                 top:8px;
                 bottom: 8px;
+                display: flex;
+                font-weight: 700;
+                font-size: 1rem;
+                align-items: center;
+                justify-content: center;
                 transition: left .4s ease-in-out, right .4s  ease-in-out;
             }
         }

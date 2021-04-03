@@ -126,7 +126,7 @@ function App() {
             <Form>
               <div className="label-wrapper">
                 <label htmlFor="base-price">Loan Amount ($)</label>
-                <TipIcon tip="This is a tip!"></TipIcon>
+                <TipIcon tip="This should be the amount of the loan, not the total price of the vehicle purchase."></TipIcon>
               </div>
               <div className="input-wrap" style={{}}>
                 <BasePriceInput
@@ -147,7 +147,7 @@ function App() {
 
               <div className="label-wrapper">
                 <label htmlFor="base-price">Months</label>
-                <TipIcon tip="This is a tip!"></TipIcon>
+                <TipIcon tip="Duration of the loan in months. The average new loan duration in the US is 67 months."></TipIcon>
               </div>
               <MonthSelect setMonths={setMonths} months={months}></MonthSelect>
               <TaxSelect tax={taxRate} setTax={setTax}></TaxSelect>
@@ -397,13 +397,14 @@ const BasePriceInput = styled.input`
   width: 100%;
   padding: 1rem 1.4rem;
   box-sizing: border-box;
-  background-color: rgb(38, 48, 60);
+  background-color: rgb(49, 64, 82);
   color: white;
   border-radius: 2rem;
   font-size: 1.3rem;
   font-weight: 500;
   outline: none;
   border: none;
+  /* color: #b7adec; */
   ::before {
     content: "hi";
   }
@@ -424,7 +425,7 @@ const BasePriceInput = styled.input`
 function GithubLink() {
   return (
     <GithubLinkStyle>
-      <a href="github.com/jakermate/loan" target="_blank" rel="noreferrer">
+      <a href="https://github.com/jakermate/loan" target="_blank" rel="noreferrer">
         <img src={github} alt="github-icon" width={80} />
       </a>
     </GithubLinkStyle>
