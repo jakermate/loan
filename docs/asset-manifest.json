@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.55c2a852.chunk.css",
+    "main.js": "/static/js/main.ba4f7eba.chunk.js",
+    "main.js.map": "/static/js/main.ba4f7eba.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a089b5f3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a089b5f3.js.map",
+    "static/js/2.ac4a14a9.chunk.js": "/static/js/2.ac4a14a9.chunk.js",
+    "static/js/2.ac4a14a9.chunk.js.map": "/static/js/2.ac4a14a9.chunk.js.map",
+    "static/js/3.5698fd9b.chunk.js": "/static/js/3.5698fd9b.chunk.js",
+    "static/js/3.5698fd9b.chunk.js.map": "/static/js/3.5698fd9b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.55c2a852.chunk.css.map": "/static/css/main.55c2a852.chunk.css.map",
+    "static/js/2.ac4a14a9.chunk.js.LICENSE.txt": "/static/js/2.ac4a14a9.chunk.js.LICENSE.txt",
+    "static/media/close.2f92e606.svg": "/static/media/close.2f92e606.svg",
+    "static/media/github-link.15fd0c6d.svg": "/static/media/github-link.15fd0c6d.svg",
+    "static/media/question.fdc220cc.svg": "/static/media/question.fdc220cc.svg",
+    "static/media/tax.db94116a.svg": "/static/media/tax.db94116a.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a089b5f3.js",
+    "static/js/2.ac4a14a9.chunk.js",
+    "static/css/main.55c2a852.chunk.css",
+    "static/js/main.ba4f7eba.chunk.js"
+  ]
+}
