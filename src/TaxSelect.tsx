@@ -44,9 +44,9 @@ const TaxSelectStyle = styled.div`
         border-radius: 2rem;
         font-size: 1rem;
         margin-left: 1rem;
+        font-weight: 800;
         min-width: 4rem;
         display: flex;
-        font-weight: 700;
         justify-content: center;
         align-items: center;
     }

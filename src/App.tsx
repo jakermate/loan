@@ -8,7 +8,7 @@ import comma from "comma-number"
 import github from "./github-link.svg"
 import MonthSelect from "./MonthSelect"
 import TaxSelect from "./TaxSelect"
-import { Bar, Doughnut } from "react-chartjs-2"
+import { Bar, Doughnut, Line } from "react-chartjs-2"
 import TipIcon from "./TipIcon"
 import close from "./close.svg"
 function App() {
@@ -91,6 +91,17 @@ function App() {
       },
     ],
   }
+  const monthlyChartData = {
+    labels: Array.from({length: months}, (_, i)=> `${i}`),
+    datasets: [
+      {
+        // backgroundColor: ["#2ffc4a", "#862FFC"],
+        data: Array.from({length: months}, (_, i)=> `${totalPrice - i * monthlyPayment}`),
+      },
+    ],
+    borderWidth: 3
+    
+  }
   const TaxesPayedData = {
     labels: ["Base Price", "Taxes"],
     datasets: [
@@ -156,15 +167,15 @@ function App() {
           {/* @ts-ignore */}
           <SummaryGrid>
             <SummaryBox>
-              <h2 className="stat-large">{comma(totalPrice)}</h2>
+              <h2 className="stat-large"><span className="dollar">$</span>{comma(totalPrice)}</h2>
               <h4>Total Cost</h4>
             </SummaryBox>
             <SummaryBox>
-              <h2 className="stat-large">{comma(monthlyPayment)}</h2>
+              <h2 className="stat-large"><span className="dollar">$</span>{comma(monthlyPayment)}</h2>
               <h4>Monthly</h4>
             </SummaryBox>
             <SummaryBox>
-              <h2 className="stat-large">{comma(taxPayed)}</h2>
+              <h2 className="stat-large"><span className="dollar">$</span>{comma(taxPayed)}</h2>
               <h4>Taxes and Fees</h4>
             </SummaryBox>
           </SummaryGrid>
@@ -206,9 +217,9 @@ function App() {
             </div>
           </OutputBox>
           <OutputBox>
-            <h2>Other</h2>
-            <Bar
-              data={averageData}
+            <h2>Remaining Balance Over {months} Months</h2>
+            <Line
+              data={monthlyChartData}
               options={{
                 maintainAspectRatio: true,
                 legend: { display: false },
@@ -233,10 +244,11 @@ function App() {
                   yAxes: [
                     {
                       ticks: {
-                        display: false,
+                        // display: false,
+                        beginAtZero: true
                       },
                       gridLines: {
-                        display: false,
+                        // display: false,
                       },
                     },
                   ],
@@ -254,6 +266,11 @@ function App() {
           </OutputBox>
         </OutputsGrid>
       </section>
+      <FooterView>
+                <div>
+                  Built in <a href="https://github.com/facebook/react">ReactJS</a> by <a href="https://github.com/jakermate">Jake Miller</a>
+                </div>
+      </FooterView>
     </div>
   )
 }
@@ -275,7 +292,7 @@ const OutputsGrid = styled.div`
   margin: -8rem auto 0 auto;
   display: grid;
   grid-gap: 2rem;
-  max-width: 1024px;
+  max-width: 1280px;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
   /* justify-items: center; */
@@ -283,17 +300,20 @@ const OutputsGrid = styled.div`
 
 const OutputBox = styled.div`
   background: white;
-  border-radius: 18px;
+  border-radius: 2rem;
   padding: 2rem;
   /* min-width: 220px; */
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   h2 {
     margin: 0 0 2rem 0;
     text-align: left;
+    font-weight: bold;
   }
   .subheader {
-    margin-top: 1.3rem;
+    margin-top: 1.6rem;
+    font-weight: 500;
+    color: #454850;
   }
 `
 const SummaryGrid = styled.div`
@@ -309,14 +329,20 @@ const SummaryBox = styled.div`
   background: #384052;
   border-radius: 8px;
   display: flex;
+  overflow: hidden;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   padding: 1rem 0.5rem;
+  .dollar{
+    color: #acb6ce;
+    font-size: 1rem;
+    /* display: inline-block; */
+  }
   h2.stat-large {
     margin: 0;
     font-size: 1.6rem;
-    font-weight: 400;
+    font-weight: 700;
   }
   h4 {
     font-size: 0.7rem;
@@ -439,5 +465,16 @@ const GithubLinkStyle = styled.div`
   background-color: none;
   :hover {
     transform: translate(-6px, 6px) scale(1.2);
+  }
+`
+
+const FooterView = styled.footer`
+  padding: 4rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a{
+    text-decoration: none;
+    font-weight: bold;
   }
 `
