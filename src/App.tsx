@@ -185,10 +185,9 @@ function App() {
           </div>
         </HeaderContent>
       </header>
-      <section
+      <OutputsWrapper
         id="outputs-wrapper"
         style={{
-          padding: "4rem",
         }}
       >
         <OutputsGrid
@@ -265,7 +264,7 @@ function App() {
             </div>
           </OutputBox>
         </OutputsGrid>
-      </section>
+      </OutputsWrapper>
       <FooterView>
                 <div>
                   Built in <a href="https://github.com/facebook/react">ReactJS</a> by <a href="https://github.com/jakermate">Jake Miller</a>
@@ -286,6 +285,15 @@ const HeaderContent = styled.div`
     margin-bottom: 8rem;
     font-size: 0.6rem;
     color: #b3bcd0;
+  }
+`
+const OutputsWrapper = styled.section`
+  padding: 1rem;
+  @media(min-width: 420px){
+    padding: 2rem;
+  }
+  @media(min-width: 720px){
+    padding: 4rem;
   }
 `
 const OutputsGrid = styled.div`
