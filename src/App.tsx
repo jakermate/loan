@@ -184,7 +184,15 @@ function App() {
             your car shopping research.
           </div>
         </HeaderContent>
+        {
+        basePrice === 0  &&
+        <div style={{
+          marginBottom: "1rem",
+          fontSize: '1rem'
+        }}>Enter a base price to view price breakdown.</div>
+      }
       </header>
+      
       <OutputsWrapper
         id="outputs-wrapper"
         style={{
@@ -436,6 +444,10 @@ const BasePriceInput = styled.input`
   border-radius: 2rem;
   font-size: 1.3rem;
   font-weight: 500;
+  :focus{
+    background: rgb(36, 50, 68);
+    box-shadow: 0 0px 16px rgb(68, 136, 224);
+  }
   outline: none;
   border: none;
   /* color: #b7adec; */

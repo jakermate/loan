@@ -15,7 +15,7 @@ export default function TipIcon(props: Props) {
       }}
       data-tip={props.tip}
     >
-      <ReactTooltip ></ReactTooltip>
+      <ReactTooltip multiline></ReactTooltip>
       <img src={question} alt="tooltip-icon" width={20} style={{}} />
     </div>
   )
