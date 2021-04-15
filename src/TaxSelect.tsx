@@ -32,9 +32,12 @@ export default function TaxSelect(props: Props) {
 }
 const TaxSelectStyle = styled.div`
   width: 100%;
+  
   .slider-wrap{
       display: flex;
       flex-direction: row;
+  height: 52px;
+
   }
   .tax-output{
         color: white;
@@ -74,10 +77,15 @@ const TaxSelectStyle = styled.div`
       border-radius: 8px;
     }
     ::-webkit-slider-thumb{
+        -webkit-appearance: none;
         width: 36px;
         height: 36px;
-        background: white;
+        transform: translateY(-10px);
+        box-shadow: 3px 3px 8px rgba(0,0,0,.4);
+        border-radius: 100%;
+        background: linear-gradient(to top right, #bbb, #fff);
         border:none;
+        position: relative;
     }
 
     /* mozilla */

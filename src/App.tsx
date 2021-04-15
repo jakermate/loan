@@ -92,15 +92,15 @@ function App() {
     ],
   }
   const monthlyChartData = {
-    labels: Array.from({length: months}, (_, i)=> `${i}`),
+    labels: Array.from({ length: months }, (_, i) => `${i}`),
     datasets: [
       {
         // backgroundColor: ["#2ffc4a", "#862FFC"],
-        data: Array.from({length: months}, (_, i)=> `${totalPrice - i * monthlyPayment}`),
+        data: Array.from({ length: months }, (_, i) => `${totalPrice - i * monthlyPayment}`),
       },
     ],
     borderWidth: 3
-    
+
   }
   const TaxesPayedData = {
     labels: ["Base Price", "Taxes"],
@@ -131,21 +131,32 @@ function App() {
                 width: "80px",
               }}
             />
-            <h2>Car Loan Calculator</h2>
+            <h2 className="title">Car Loan Calculator</h2>
+            <p className="subtitle">Estimate your monthly payment and total interest payed.</p>
           </div>
           <div id="input-section">
+
             <Form>
-              <div className="label-wrapper">
-                <label htmlFor="base-price">Loan Amount ($)</label>
-                <TipIcon tip="This should be the amount of the loan, not the total price of the vehicle purchase."></TipIcon>
-              </div>
-              <div className="input-wrap" style={{}}>
+              <div style={{
+                fontSize: "1rem",
+                marginBottom: '2rem',
+                fontWeight: 700
+              }}>
+                Enter a loan amount to get started.
+                <hr/>
+            </div>
+              {/* Base Price */}
+              <InputSection>
+                <div className="label-wrapper">
+                  <label htmlFor="base-price">Loan Amount ($)</label>
+                  {/* <TipIcon tip="This should be the amount of the loan, not the total price of the vehicle purchase."></TipIcon> */}
+                </div>
                 <BasePriceInput
                   type="text"
                   name="base-price"
                   id="base-price"
                   onChange={(e) => validateBasePrice(e.target.value)}
-                  value={comma(basePrice.toString())}
+                  value={basePrice}
                 />
                 {basePrice > 0 && (
                   <div className="abs-button-wrap">
@@ -154,17 +165,34 @@ function App() {
                     </button>
                   </div>
                 )}
-              </div>
+                <Hint hint={"This is the price of the car you are purchasing, minus your down payment amount."}></Hint>
+
+              </InputSection>
+
+              {/* Month Selection */}
+              <InputSection>
 
               <div className="label-wrapper">
-                <label htmlFor="base-price">Months</label>
-                <TipIcon tip="Duration of the loan in months. The average new loan duration in the US is 67 months."></TipIcon>
-              </div>
-              <MonthSelect setMonths={setMonths} months={months}></MonthSelect>
-              <TaxSelect tax={taxRate} setTax={setTax}></TaxSelect>
+                  <label htmlFor="base-price">Months</label>
+                  {/* <TipIcon tip="Duration of the loan in months. The average new loan duration in the US is 67 months. Loan periods of 72 or more months are usually only available as incentives on new car purchases."></TipIcon> */}
+                </div>
+                <MonthSelect setMonths={setMonths} months={months}></MonthSelect>
+                <Hint hint={"It's best not to take a loan longer than 36 months for used cars, and 60 months for new cars.  The longer your loan duration, the more you will pay in interest beyond the price of the car."}></Hint>
+              </InputSection>
+
+              {/* TaxSelection */}
+              <InputSection>
+                <TaxSelect tax={taxRate} setTax={setTax}></TaxSelect>
+                <Hint hint={"New car purchases typically incentivise their purchase by offering lower interest rates than you can typically get on a used car purchase.  This will be partially based upon your credit score."}></Hint>
+
+              </InputSection>
             </Form>
           </div>
           {/* @ts-ignore */}
+          <SummaryContainer>
+            <h2>
+              Purchase Summary
+            </h2>
           <SummaryGrid>
             <SummaryBox>
               <h2 className="stat-large"><span className="dollar">$</span>{comma(totalPrice)}</h2>
@@ -179,20 +207,21 @@ function App() {
               <h4>Taxes and Fees</h4>
             </SummaryBox>
           </SummaryGrid>
+          </SummaryContainer>
           <div className="tag" style={{}}>
             *All values are estimates and should only be used as but part of
             your car shopping research.
           </div>
         </HeaderContent>
         {
-        basePrice === 0  &&
-        <div style={{
-          marginBottom: "1rem",
-          fontSize: '1rem'
-        }}>Enter a base price to view price breakdown.</div>
-      }
+          basePrice === 0 &&
+          <div style={{
+            marginBottom: "1rem",
+            fontSize: '1rem'
+          }}>Enter a base price to view price breakdown.</div>
+        }
       </header>
-      
+
       <OutputsWrapper
         id="outputs-wrapper"
         style={{
@@ -202,81 +231,133 @@ function App() {
           id="outputs-grid"
           style={{
             transition: `all .2s linear`,
-            transform: `${
-              basePrice > 0 ? "translateY(0px)" : "translateY(10px)"
-            }`,
+            transform: `${basePrice > 0 ? "translateY(0px)" : "translateY(10px)"
+              }`,
             opacity: basePrice > 0 ? 1 : 0,
           }}
         >
           <OutputBox>
-            <h2>Taxes and Fees Payed</h2>
-            <Doughnut
-              data={TaxesPayedData}
-              options={{
-                maintainAspectRatio: true,
-                legend: { position: "right", align: "start" },
-              }}
-            />
-            <div className="subheader">
-              Taxes and Fees contributed to{" "}
-              {taxPayed > 0 ? ((taxPayed / totalPrice) * 100).toFixed(0) : 0}%
+            {
+              basePrice > 0 ?
+                <div className="box-content-wrap">
+                  <h2>Taxes and Fees Payed</h2>
+                  <Doughnut
+                    data={TaxesPayedData}
+                    options={{
+                      maintainAspectRatio: true,
+                      legend: { position: "right", align: "start" },
+                    }}
+                  />
+                  <div className="subheader">
+                    Taxes and Fees contributed to{" "}
+                    {taxPayed > 0 ? ((taxPayed / totalPrice) * 100).toFixed(0) : 0}%
               of the overall cost.
             </div>
+                </div>
+                :
+                <Placeholder></Placeholder>
+
+            }
+
+
           </OutputBox>
           <OutputBox>
-            <h2>Remaining Balance Over {months} Months</h2>
-            <Line
-              data={monthlyChartData}
-              options={{
-                maintainAspectRatio: true,
-                legend: { display: false },
-              }}
-            />
+            {
+              basePrice > 0 ?
+                <div className="box-content-wrap">
+                  <h2>Remaining Balance Over {months} Months</h2>
+                  <Line
+                    data={monthlyChartData}
+                    options={{
+                      maintainAspectRatio: true,
+                      legend: { display: false },
+                    }}
+                  />
+                </div>
+                :
+                <Placeholder></Placeholder>
+            }
+
+
           </OutputBox>
           <OutputBox>
-            <h2>Versus USA Average</h2>
-            <Bar
-              data={averageData}
-              options={{
-                maintainAspectRatio: true,
-                legend: { display: false },
-                scales: {
-                  xAxes: [
-                    {
-                      gridLines: {
-                        display: false,
+            {
+              basePrice > 0 ?
+                <div className="box-content-wrap">
+                  <h2>Versus USA Average</h2>
+                  <Bar
+                    data={averageData}
+                    options={{
+                      maintainAspectRatio: true,
+                      legend: { display: false },
+                      scales: {
+                        xAxes: [
+                          {
+                            gridLines: {
+                              display: false,
+                            },
+                          },
+                        ],
+                        yAxes: [
+                          {
+                            ticks: {
+                              // display: false,
+                              beginAtZero: true
+                            },
+                            gridLines: {
+                              // display: false,
+                            },
+                          },
+                        ],
                       },
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      ticks: {
-                        // display: false,
-                        beginAtZero: true
-                      },
-                      gridLines: {
-                        // display: false,
-                      },
-                    },
-                  ],
-                },
-              }}
-            />
-            <div className="subheader">
-              Your average payment is{" "}
-              {Math.abs(
-                ((nationalAverage - monthlyPayment) / nationalAverage) * 100
-              ).toFixed(0)}
+                    }}
+                  />
+                  <div className="subheader">
+                    Your average payment is{" "}
+                    {Math.abs(
+                      ((nationalAverage - monthlyPayment) / nationalAverage) * 100
+                    ).toFixed(0)}
               % {monthlyPayment < nationalAverage ? "lower" : "higher"} than the
               national average
             </div>
+                </div>
+                :
+                <Placeholder></Placeholder>
+            }
+
+
           </OutputBox>
         </OutputsGrid>
       </OutputsWrapper>
+      <InfoSection>
+        <div>
+
+        <h2>How to use the loan calculator.</h2>
+          <p>While this aims to help you in your car shopping, please note that there a many hidden costs and fees that may or may not apply to your purchase.</p>
+          <p>Some examples:</p>
+          <ul>
+            <li>Delivery Fee</li>
+            <li>Title, License, or Registration Fees</li>
+            <li>Local Taxes</li>
+          </ul>
+          <p>As a result, it's impossible for this calulator to account for everything you may be charged while purchasing a vehicle.</p>
+        </div>
+        <div>
+          <h2>About Auto Loans</h2>
+          <p>This is where you learn about auto loans.</p>
+          <p>You'll learn more here.</p>
+        </div>
+        <div>
+          <h2>New vs. Used</h2>
+          <p>This is where you learn about auto loans.</p>
+          <p>You'll learn more here.</p>
+        </div>
+      </InfoSection>
       <FooterView>
-                <div>
-                  Built in <a href="https://github.com/facebook/react">ReactJS</a> by <a href="https://github.com/jakermate">Jake Miller</a>
-                </div>
+        <div>
+          Built in <a href="https://github.com/facebook/react">ReactJS</a> by <a href="https://github.com/jakermate">Jake Miller</a>
+        </div>
+        <div className="copy">&copy; 2021</div>
       </FooterView>
     </div>
   )
@@ -289,6 +370,13 @@ const HeaderContent = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  .title{
+    margin-bottom: 0rem !important;
+  }
+  .subtitle{
+    font-size: 1rem;
+    margin: 1rem 0 2rem 0 ;
+  }
   .tag {
     margin-bottom: 8rem;
     font-size: 0.6rem;
@@ -300,9 +388,9 @@ const OutputsWrapper = styled.section`
   @media(min-width: 420px){
     padding: 2rem;
   }
-  @media(min-width: 720px){
+  /* @media(min-width: 720px){
     padding: 4rem;
-  }
+  } */
 `
 const OutputsGrid = styled.div`
   margin: -8rem auto 0 auto;
@@ -331,14 +419,34 @@ const OutputBox = styled.div`
     font-weight: 500;
     color: #454850;
   }
+  .box-content-wrap{
+    width: 100%;
+    height: 100%;
+  }
+`
+const SummaryContainer = styled.div`
+ box-shadow: 0 4px 16px -4px rgba(0,0,0,.3);
+  background: rgba(100,100,100,.1);
+  padding: 1rem;
+  border-radius: 16px;
+  margin-top: 2rem;
+
+  margin-bottom: 2rem;
+  h2{
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
 `
 const SummaryGrid = styled.div`
+
   display: grid;
   grid-template-columns: repeat(3, minmax(100px, 150px));
-  margin-top: 4rem;
   grid-gap: 0.6rem;
-  margin-bottom: 2rem;
   justify-content: center;
+ 
 `
 const SummaryBox = styled.div`
   min-height: 10px;
@@ -390,16 +498,20 @@ const Form = styled.div`
   text-align: left;
   min-width: 320px;
   max-width: 420px;
+  box-shadow: 0 4px 16px -4px rgba(0,0,0,.3);
+  background: rgba(100,100,100,.1);
+  padding: 1.5rem 1rem;
+  border-radius: 16px;
   @media (min-width: 640px) {
     min-width: 400px;
   }
   label {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
-    color: #a1b8f3;
+    color: #b7c6ee;
   }
   .label-wrapper {
-    margin: 0 0 1rem 0;
+    margin: 0 0 .7rem 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -430,6 +542,10 @@ const Form = styled.div`
       margin-right: 1rem;
       background: none;
       border: none;
+      transition: all .1s linear;
+      :hover{
+        transform: scale(1.2);
+      }
       outline: none;
       cursor: pointer;
     }
@@ -441,9 +557,10 @@ const BasePriceInput = styled.input`
   box-sizing: border-box;
   background-color: rgb(49, 64, 82);
   color: white;
+  height: 52px;
   border-radius: 2rem;
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 600;
   :focus{
     background: rgb(36, 50, 68);
     box-shadow: 0 0px 16px rgb(68, 136, 224);
@@ -488,13 +605,68 @@ const GithubLinkStyle = styled.div`
   }
 `
 
+const InfoSection = styled.section`
+  max-width: 840px;
+  text-align: left;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @media(min-width: 1024px){
+    padding: 0;
+  }
+  h2{
+    margin: 2rem 0;
+    font-weight: 900;
+    font-size: 2rem;
+  }
+  p{
+
+  }
+`
+
 const FooterView = styled.footer`
   padding: 4rem 0;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
+  background: linear-gradient(to bottom, #212a3d, #1a2335);
+  color: white;
+
+  .copy{
+    font-size: 10px;
+    margin-top: .4rem;
+  }
   a{
     text-decoration: none;
     font-weight: bold;
+    :visited{
+      color: white;
+    }
   }
+`
+
+function Placeholder() {
+  return (
+    <div>
+
+    </div>
+  )
+}
+
+function Hint(props: any) {
+  return (
+    <HintPara>
+      {props.hint}
+    </HintPara>
+  )
+}
+const HintPara = styled.p`
+  /* margin-top: 8px; */
+  font-size: 12px;
+  color: #a1b8f3;
+`
+const InputSection = styled.div`
+  margin-bottom: 1.5rem;
+  position: relative;
 `

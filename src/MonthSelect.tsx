@@ -1,11 +1,45 @@
 import React, { useEffect } from 'react'
 // import {} from 'styled-components/cssprop'
 import styled from 'styled-components'
+import throttle from 'lodash/throttle'
 interface MonthProps {
     setMonths: (number: number) => void,
     months: number
 }
 export default function MonthSelect(props: MonthProps) {
+    useEffect(()=>{
+        window.addEventListener('resize', restyle)
+        return () =>{
+            window.removeEventListener('resize', restyle)
+        }
+    })
+    const restyle = throttle(restyleThing, 400)
+    function restyleThing(){
+        console.log('call')
+        let containerEl = document.getElementById('month-select')
+        let buttonEl = document.getElementById(`months-${props.months}`)
+        console.log(buttonEl?.offsetLeft)
+        // @ts-ignore
+        let indEl = document.getElementById('indicator')
+        // determine order of animations
+        // @ts-ignore
+        if (parseFloat(indEl?.style.left) > buttonEl?.offsetLeft) {
+            // @ts-ignore
+            indEl.style.left = `${buttonEl?.offsetLeft}px`
+            setTimeout(() => {
+                // @ts-ignore
+                indEl.style.right = `${containerEl.clientWidth - buttonEl?.offsetLeft - buttonEl?.offsetWidth}px`
+            }, 200)
+            return
+        }
+        // @ts-ignore
+        indEl.style.right = `${containerEl.clientWidth - buttonEl?.offsetLeft - buttonEl?.offsetWidth}px`
+        setTimeout(() => {
+            // @ts-ignore
+            indEl.style.left = `${buttonEl?.offsetLeft}px`
+        }, 100)
+
+    }
     useEffect(() => {
         let containerEl = document.getElementById('month-select')
         let buttonEl = document.getElementById(`months-${props.months}`)
@@ -24,20 +58,15 @@ export default function MonthSelect(props: MonthProps) {
             }, 200)
             return
         }
-
-
         // @ts-ignore
         indEl.style.right = `${containerEl.clientWidth - buttonEl?.offsetLeft - buttonEl?.offsetWidth}px`
         setTimeout(() => {
-
             // @ts-ignore
             indEl.style.left = `${buttonEl?.offsetLeft}px`
         }, 100)
-
-
     }, [props.months])
     return (
-        <MonthSelectStyle id="month-select">
+        <MonthSelectStyle id="month-select" >
 
             <ul>
                 <li id="months-12">
@@ -90,12 +119,12 @@ export default function MonthSelect(props: MonthProps) {
 const MonthSelectStyle = styled.div`
     position: relative;
     background: linear-gradient(to right, #4e2ffc, #862FFC);
-    height: 4rem;
+    height: 52px;
     border-radius: 2rem;
     width: 100%;
     box-shadow: 0 4px 16px rgba(0,0,0,.3);
     overflow: hidden;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     ul{
         display: flex;
         flex-direction: row;
@@ -125,6 +154,12 @@ const MonthSelectStyle = styled.div`
                 font-weight: 700;
                 font-size: 1rem;
                 cursor: pointer;
+                :hover{
+                    color: #222;
+                }
+                :active, :focus{
+                    outline: none;
+                }
             }
         }
 
