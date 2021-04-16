@@ -113,6 +113,18 @@ function App() {
     borderWidth: 3,
   }
 
+  // input field methods
+  function blurInput(){
+    document.querySelectorAll('.input-field-wrapper').forEach(el=>{
+      el.classList.toggle('active', false)
+    })
+  }
+  function focusInput(){
+    document.querySelectorAll('.input-field-wrapper').forEach(el=>{
+      el.classList.toggle('active', true)
+    })
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -134,7 +146,8 @@ function App() {
             <h2 className="title">Car Loan Calculator</h2>
             <p className="subtitle">Estimate your monthly payment and total interest payed.</p>
           </div>
-          <div id="input-section">
+          <div id="input-section" style={{
+          }}>
 
             <Form>
               <div style={{
@@ -142,19 +155,23 @@ function App() {
                 marginBottom: '2rem',
                 fontWeight: 700
               }}>
-                Enter a loan amount to get started.
-                <hr/>
-            </div>
+                💵 Enter a loan amount to get started.
+                <hr />
+              </div>
               {/* Base Price */}
               <InputSection>
                 <div className="label-wrapper">
                   <label htmlFor="base-price">Loan Amount ($)</label>
                   {/* <TipIcon tip="This should be the amount of the loan, not the total price of the vehicle purchase."></TipIcon> */}
                 </div>
+                <InputFieldWrapper className="input-field-wrapper" onClick={e => document.getElementById('base-price')?.focus()}>
                 <BasePriceInput
                   type="text"
                   name="base-price"
                   id="base-price"
+                  onBlur={e => blurInput()}
+                  onFocus={e => focusInput()}
+
                   onChange={(e) => validateBasePrice(e.target.value)}
                   value={basePrice}
                 />
@@ -165,6 +182,8 @@ function App() {
                     </button>
                   </div>
                 )}
+                </InputFieldWrapper>
+                
                 <Hint hint={"This is the price of the car you are purchasing, minus your down payment amount."}></Hint>
 
               </InputSection>
@@ -172,7 +191,7 @@ function App() {
               {/* Month Selection */}
               <InputSection>
 
-              <div className="label-wrapper">
+                <div className="label-wrapper">
                   <label htmlFor="base-price">Months</label>
                   {/* <TipIcon tip="Duration of the loan in months. The average new loan duration in the US is 67 months. Loan periods of 72 or more months are usually only available as incentives on new car purchases."></TipIcon> */}
                 </div>
@@ -187,39 +206,36 @@ function App() {
 
               </InputSection>
             </Form>
-          </div>
-          {/* @ts-ignore */}
-          <SummaryContainer>
+            <SummaryContainer>
             <h2>
               Purchase Summary
             </h2>
-          <SummaryGrid>
-            <SummaryBox>
-              <h2 className="stat-large"><span className="dollar">$</span>{comma(totalPrice)}</h2>
-              <h4>Total Cost</h4>
-            </SummaryBox>
-            <SummaryBox>
-              <h2 className="stat-large"><span className="dollar">$</span>{comma(monthlyPayment)}</h2>
-              <h4>Monthly</h4>
-            </SummaryBox>
-            <SummaryBox>
-              <h2 className="stat-large"><span className="dollar">$</span>{comma(taxPayed)}</h2>
-              <h4>Taxes and Fees</h4>
-            </SummaryBox>
-          </SummaryGrid>
+            <SummaryGrid>
+              <SummaryBox>
+                <h2 className="stat-large"><span className="dollar">$</span>{comma(totalPrice)}</h2>
+                <h4>Total Cost</h4>
+              </SummaryBox>
+              <SummaryBox>
+                <h2 className="stat-large"><span className="dollar">$</span>{comma(monthlyPayment)}</h2>
+                <h4>Monthly</h4>
+              </SummaryBox>
+              <SummaryBox>
+                <h2 className="stat-large"><span className="dollar">$</span>{comma(taxPayed)}</h2>
+                <h4>Taxes and Fees</h4>
+              </SummaryBox>
+            </SummaryGrid>
           </SummaryContainer>
-          <div className="tag" style={{}}>
+          </div>
+          {/* @ts-ignore */}
+          
+          <div className="tag" style={{
+            marginTop: "1rem"
+          }}>
             *All values are estimates and should only be used as but part of
             your car shopping research.
           </div>
         </HeaderContent>
-        {
-          basePrice === 0 &&
-          <div style={{
-            marginBottom: "1rem",
-            fontSize: '1rem'
-          }}>Enter a base price to view price breakdown.</div>
-        }
+
       </header>
 
       <OutputsWrapper
@@ -332,15 +348,79 @@ function App() {
       <InfoSection>
         <div>
 
-        <h2>How to use the loan calculator.</h2>
+          <h2>How to use the loan calculator.</h2>
           <p>While this aims to help you in your car shopping, please note that there a many hidden costs and fees that may or may not apply to your purchase.</p>
           <p>Some examples:</p>
           <ul>
-            <li>Delivery Fee</li>
-            <li>Title, License, or Registration Fees</li>
-            <li>Local Taxes</li>
+            <li><strong>Delivery Fee</strong> (usually around $800 USD)</li>
+            <li><strong>Title, License, or Registration Fees</strong></li>
+            <li><strong>Local Taxes</strong></li>
           </ul>
           <p>As a result, it's impossible for this calulator to account for everything you may be charged while purchasing a vehicle.</p>
+        </div>
+        <div>
+          <h2>Typical Interest Rates</h2>
+          <p>If you know your credit score, you can use the table below to estimate the interest rate you'll be offered by your lender.</p>
+          <Table>
+            <thead>
+              <tr>
+                <th>Credit Score</th>
+                <th>APR (New Purchase)</th>
+                <th>APR (Used Purchase)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="credit-score">
+                  <div className="bracket-name">Super Prime</div>
+                  <div className="bracket-range">720-880</div>
+                </td>
+                <td>3.65%</td>
+                <td>4.29%</td>
+              </tr>
+              <tr>
+                <td className="credit-score">
+                  <div className="bracket-name">Prime</div>
+                  <div className="bracket-range">660-719</div>
+                </td>
+                <td>4.68%</td>
+                <td>6.04%</td>
+              </tr>
+              <tr>
+                <td className="credit-score">
+                  <div className="bracket-name">Nonprime</div>
+                  <div className="bracket-range">620-659</div>
+                </td>
+                <td>7.65%</td>
+                <td>11.26%</td>
+              </tr>
+              <tr>
+                <td className="credit-score">
+                  <div className="bracket-name">Subprime</div>
+                  <div className="bracket-range">580-619</div>
+                </td>
+                <td>11.92%</td>
+                <td>17.74%</td>
+              </tr>
+              <tr>
+                <td className="credit-score">
+                  <div className="bracket-name">Deep Subprime</div>
+                  <div className="bracket-range">0-579</div>
+                </td>
+                <td>14.39%</td>
+                <td>20.45%</td>
+              </tr>
+              <tr>
+                <td className="footer" colSpan={3}><em>Sourced from Experian.com</em>
+                  <div style={{
+                    fontSize: 12,
+                    color: "#b3bcd0",
+                    marginTop: 6
+                  }}>All values provided are averages, and do not take into account promotional offers available at dealers.</div>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </div>
         <div>
           <h2>About Auto Loans</h2>
@@ -370,6 +450,7 @@ const HeaderContent = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+ 
   .title{
     margin-bottom: 0rem !important;
   }
@@ -381,6 +462,20 @@ const HeaderContent = styled.div`
     margin-bottom: 8rem;
     font-size: 0.6rem;
     color: #b3bcd0;
+  }
+  hr{
+    opacity: .3
+  }
+  #input-section{
+    display: flex;
+    flex-direction: column;
+    max-width: 420px;
+    justify-content: start;
+    align-items: flex-start;
+    @media(min-width: 768px){
+      flex-direction: row;
+      max-width: 768px;
+    }
   }
 `
 const OutputsWrapper = styled.section`
@@ -428,7 +523,9 @@ const SummaryContainer = styled.div`
  box-shadow: 0 4px 16px -4px rgba(0,0,0,.3);
   background: rgba(100,100,100,.1);
   padding: 1rem;
+  width: 100%;
   border-radius: 16px;
+  box-sizing: border-box;
   margin-top: 2rem;
 
   margin-bottom: 2rem;
@@ -437,13 +534,27 @@ const SummaryContainer = styled.div`
   font-size: 1.7rem;
   font-weight: 800;
   margin-bottom: 1rem;
-}
 
+}
+@media(min-width: 768px){
+  margin-top: 0;
+  margin-left: 1rem;
+  max-width: 280px;
+  text-align: left;
+  h2{
+    font-size: 1.2rem;
+  }
+}
 `
 const SummaryGrid = styled.div`
 
   display: grid;
-  grid-template-columns: repeat(3, minmax(100px, 150px));
+  grid-template-columns: repeat(3, minmax(120px, 150px));
+  @media(min-width: 768px){
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
   grid-gap: 0.6rem;
   justify-content: center;
  
@@ -462,6 +573,12 @@ const SummaryBox = styled.div`
     color: #acb6ce;
     font-size: 1rem;
     /* display: inline-block; */
+  }
+  @media(min-width: 768px){
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items:flex-start;
   }
   h2.stat-large {
     margin: 0;
@@ -497,13 +614,17 @@ const Form = styled.div`
   justify-content: start;
   text-align: left;
   min-width: 320px;
-  max-width: 420px;
+  /* max-width: 420px; */
+  width: 100%;
   box-shadow: 0 4px 16px -4px rgba(0,0,0,.3);
   background: rgba(100,100,100,.1);
   padding: 1.5rem 1rem;
+  box-sizing: border-box;
   border-radius: 16px;
   @media (min-width: 640px) {
     min-width: 400px;
+  padding: 1.5rem 1rem;
+
   }
   label {
     font-weight: 600;
@@ -529,17 +650,11 @@ const Form = styled.div`
     margin-bottom: 1rem;
   }
   .abs-button-wrap {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
     display: flex;
-
     justify-content: center;
     align-items: center;
     button {
-      padding: .4rem;
-      margin-right: 1rem;
+      padding: .8rem;
       background: none;
       border: none;
       transition: all .1s linear;
@@ -553,18 +668,12 @@ const Form = styled.div`
 `
 const BasePriceInput = styled.input`
   width: 100%;
-  padding: 1rem 1.4rem;
-  box-sizing: border-box;
-  background-color: rgb(49, 64, 82);
+  height: 100%;
+  background: none;
   color: white;
-  height: 52px;
-  border-radius: 2rem;
   font-size: 1.3rem;
   font-weight: 600;
-  :focus{
-    background: rgb(36, 50, 68);
-    box-shadow: 0 0px 16px rgb(68, 136, 224);
-  }
+  flex:1;
   outline: none;
   border: none;
   /* color: #b7adec; */
@@ -582,6 +691,24 @@ const BasePriceInput = styled.input`
   }
   &[type="number"] {
     -moz-appearance: textfield;
+  }
+`
+const InputFieldWrapper = styled.div`
+  padding: 1rem .4rem 1rem 1rem;
+  width: 100%;
+  cursor: text;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  background-color: rgb(49, 64, 82);
+  color: white;
+  height: 52px;
+  border-radius: 8px;
+  &.active{
+    background-color: rgb(68, 84, 104);
+    box-shadow: 0 0 6px rgba(96, 153, 223, 0.445);
   }
 `
 
@@ -669,4 +796,32 @@ const HintPara = styled.p`
 const InputSection = styled.div`
   margin-bottom: 1.5rem;
   position: relative;
+`
+const Table = styled.table`
+  background: linear-gradient(to bottom, #212a3d, #1a2335);
+color: white;
+/* border-radius: 16px; */
+border-collapse: collapse;
+width: 100%;
+box-shadow: 0 4px 6px #23242733;
+  td, th{
+    padding: 1rem;
+    border: 1px solid #555b69;
+  }
+  .bracket-name{
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .footer{
+  }
+  th{
+    background-color: #862FFC;
+  }
+  tr:nth-child(even){
+    background-color: #28334b;
+  }
+  tbody{
+    border-radius: 2rem;
+  }
+ 
 `

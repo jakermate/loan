@@ -120,7 +120,7 @@ const MonthSelectStyle = styled.div`
     position: relative;
     background: linear-gradient(to right, #4e2ffc, #862FFC);
     height: 52px;
-    border-radius: 2rem;
+    border-radius: 8px;
     width: 100%;
     box-shadow: 0 4px 16px rgba(0,0,0,.3);
     overflow: hidden;
@@ -179,7 +179,7 @@ const MonthSelectStyle = styled.div`
                 color: #862FFC;
                 position: absolute;
                 box-shadow: 2px 2px 4px rgba(0,0,0,.3);
-                border-radius: 2rem;
+                border-radius: 8px;
                 top:8px;
                 bottom: 8px;
                 display: flex;

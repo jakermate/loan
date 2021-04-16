@@ -44,7 +44,7 @@ const TaxSelectStyle = styled.div`
         text-shadow: 2px 2px 2px rgba(0,0,0,.4);
         padding: 1rem;
         box-shadow: 3px 3px 6px rgba(0,0,0,.3);
-        border-radius: 2rem;
+        border-radius: 8px;
         font-size: 1rem;
         margin-left: 1rem;
         font-weight: 800;
