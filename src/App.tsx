@@ -213,7 +213,7 @@ function App() {
               Purchase Summary
             </h2>
             <SummaryGrid>
-              <SummaryBox>
+              <SummaryBox> 
                 <h2 className="stat-large"><span className="dollar">$</span>{comma(totalPrice)}</h2>
                 <h4>Total Cost</h4>
               </SummaryBox>
