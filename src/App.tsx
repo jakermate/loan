@@ -570,7 +570,7 @@ const SummaryBox = styled.div`
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1rem;
   .dollar{
     color: #acb6ce;
     font-size: 1rem;
@@ -596,15 +596,13 @@ const SummaryBox = styled.div`
   }
   @media (max-width: 520px) {
     h2.stat-large {
-      font-size: 1rem;
+      font-size: 1.4rem;
     }
     h4 {
-      font-size: 0.5rem;
+      font-size: 0.8rem;
     }
   }
-  @media (min-width: 520px) {
-    padding: 1rem;
-  }
+ 
 `
 
 export default App
