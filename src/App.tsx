@@ -147,15 +147,17 @@ function App() {
             <p className="subtitle">Estimate your monthly payment and total interest payed.</p>
           </div>
           <div id="input-section" style={{
+            boxSizing: 'border-box',
+            width: "100%"
           }}>
 
             <Form>
               <div style={{
-                fontSize: "1rem",
-                marginBottom: '2rem',
+                fontSize: "1.5rem",
+                marginBottom: '1rem',
                 fontWeight: 700
               }}>
-                💵 Enter a loan amount to get started.
+                Customise Loan Formula
                 <hr />
               </div>
               {/* Base Price */}
@@ -525,6 +527,7 @@ const SummaryContainer = styled.div`
   padding: 1rem;
   width: 100%;
   border-radius: 16px;
+  overflow: hidden;
   box-sizing: border-box;
   margin-top: 2rem;
 
@@ -547,16 +550,15 @@ const SummaryContainer = styled.div`
 }
 `
 const SummaryGrid = styled.div`
-
-  display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 150px));
+display: flex;
+    flex-direction: column;
+    text-align: left;
   @media(min-width: 768px){
     display: flex;
     flex-direction: column;
     text-align: left;
   }
   grid-gap: 0.6rem;
-  justify-content: center;
  
 `
 const SummaryBox = styled.div`
@@ -565,7 +567,7 @@ const SummaryBox = styled.div`
   border-radius: 8px;
   display: flex;
   overflow: hidden;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   justify-content: center;
   padding: 1rem 0.5rem;
@@ -614,7 +616,6 @@ const Form = styled.div`
   justify-content: start;
   text-align: left;
   min-width: 320px;
-  /* max-width: 420px; */
   width: 100%;
   box-shadow: 0 4px 16px -4px rgba(0,0,0,.3);
   background: rgba(100,100,100,.1);
