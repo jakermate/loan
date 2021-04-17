@@ -359,6 +359,7 @@ function App() {
             <li><strong>Local Taxes</strong></li>
           </ul>
           <p>As a result, it's impossible for this calulator to account for everything you may be charged while purchasing a vehicle.</p>
+          <p><em><strong>For a general estimate of total costs, add 10% to the final price to simulate state/local taxes + any license fees.</strong></em></p>
         </div>
         <div>
           <h2>Typical Interest Rates</h2>
@@ -426,14 +427,10 @@ function App() {
         </div>
         <div>
           <h2>About Auto Loans</h2>
-          <p>This is where you learn about auto loans.</p>
-          <p>You'll learn more here.</p>
+          <p>Most auto loans come in the form of what is called a <em>Simple Interest Loan.</em>  This is opposed to <em>Compound Interest Loans</em>.  A <em>Simple Interest Loan</em> has interest computed on a per payment basis.  When you make a payment on a simple interest loan, the payment first goes toward that month’s interest, and the remainder goes toward the principal. Each month’s interest is paid in full so it never accrues (interest itself doesn't contribute to the calculation of interest.)
+          </p> 
         </div>
-        <div>
-          <h2>New vs. Used</h2>
-          <p>This is where you learn about auto loans.</p>
-          <p>You'll learn more here.</p>
-        </div>
+       
       </InfoSection>
       <FooterView>
         <div>
@@ -734,7 +731,7 @@ const GithubLinkStyle = styled.div`
 const InfoSection = styled.section`
   max-width: 840px;
   text-align: left;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 0 1rem;
   
   @media(min-width: 1024px){
